@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Davidos K8s Snake</title>
+  <style>
+    body { background: #111; color: #0f0; font-family: monospace; text-align: center; margin-top: 40px; }
+    canvas { border: 2px solid #0f0; background: #000; box-shadow: 0 0 15px #0f0; }
+  </style>
+</head>
+<body>
+  <h2>🐍 Kubernetes Snake (Namespace: davidos)</h2>
+  <p>Use Arrow Keys to play | Score: <span id="score">0</span></p>
+  <canvas id="game" width="400" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    let snake = [{x: 200, y: 200}], dx = 20, dy = 0, food = {x: 100, y: 100}, score = 0;
+    document.addEventListener("keydown", e => {
+      if (e.key === "ArrowUp" && dy === 0) { dx = 0; dy = -20; }
+      if (e.key === "ArrowDown" && dy === 0) { dx = 0; dy = 20; }
+      if (e.key === "ArrowLeft" && dx === 0) { dx = -20; dy = 0; }
+      if (e.key === "ArrowRight" && dx === 0) { dx = 20; dy = 0; }
+    });
+    setInterval(() => {
+      const head = {x: (snake[0].x + dx + 400) % 400, y: (snake[0].y + dy + 400) % 400};
+      if (snake.some(s => s.x === head.x && s.y === head.y)) {
+        snake = [{x: 200, y: 200}]; score = 0; document.getElementById("score").innerText = score;
+      }
+      snake.unshift(head);
+      if (head.x === food.x && head.y === food.y) {
+        score++; document.getElementById("score").innerText = score;
+        food = {x: Math.floor(Math.random()*20)*20, y: Math.floor(Math.random()*20)*20};
+      } else { snake.pop(); }
+      ctx.clearRect(0, 0, 400, 400);
+      ctx.fillStyle = "red"; ctx.fillRect(food.x, food.y, 18, 18);
+      ctx.fillStyle = "#0f0"; snake.forEach(s => ctx.fillRect(s.x, s.y, 18, 18));
+    }, 100);
+  </script>
+</body>
+</html>
