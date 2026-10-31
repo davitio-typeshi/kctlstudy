@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2026-10-24T11:06:13Z"
+  generation: 1
+  labels:
+    run: backend-apache
+    server: apache
+  name: backend-apache
+  namespace: davidos
+  resourceVersion: "6427255"
+  uid: 7be3ecdd-74f4-4dc0-ad6d-58af0c0baa06
+spec:
+  containers:
+  - image: httpd
+    imagePullPolicy: Always
+    name: backend-apache
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-xnfrx
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: gndg-k8s-worker-02
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-xnfrx
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2026-10-24T11:06:16Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2026-10-24T11:06:13Z"
+    observedGeneration: 1
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2026-10-24T11:06:16Z"
+    observedGeneration: 1
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2026-10-24T11:06:16Z"
+    observedGeneration: 1
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2026-10-24T11:06:13Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://4181b57fc72c2e98f57403336cd06c8468106a0b19ac627d6ca1229bed6299fe
+    image: docker.io/library/httpd:latest
+    imageID: docker.io/library/httpd@sha256:a30cd4cd57f3f3c3be9b2d16384d2488839996bb14c67df2b51f1ecbb3e584a1
+    lastState: {}
+    name: backend-apache
+    ready: true
+    resources: {}
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2026-10-24T11:06:16Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 0
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-xnfrx
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 195.54.179.122
+  hostIPs:
+  - ip: 195.54.179.122
+  observedGeneration: 1
+  phase: Running
+  podIP: 10.0.1.62
+  podIPs:
+  - ip: 10.0.1.62
+  qosClass: BestEffort
+  startTime: "2026-10-24T11:06:13Z"

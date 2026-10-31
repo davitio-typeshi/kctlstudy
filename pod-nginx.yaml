@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2026-10-24T11:06:22Z"
+  generation: 1
+  labels:
+    run: backend-nginx
+    server: nginx
+  name: backend-nginx
+  namespace: davidos
+  resourceVersion: "6426486"
+  uid: f0ea36ec-fe11-4dc7-8ffa-ba4a0b1aba70
+spec:
+  containers:
+  - image: nginx
+    imagePullPolicy: Always
+    name: backend-nginx
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-ss2mz
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: gndg-k8s-worker-03
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-ss2mz
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2026-10-24T11:06:25Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2026-10-24T11:06:22Z"
+    observedGeneration: 1
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2026-10-24T11:06:25Z"
+    observedGeneration: 1
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2026-10-24T11:06:25Z"
+    observedGeneration: 1
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2026-10-24T11:06:22Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://317005d48877e2dfb5c42a8bb4d6b09075c4040c42b4b234db0be323982cdb61
+    image: docker.io/library/nginx:latest
+    imageID: docker.io/library/nginx@sha256:4c41e2d0a3a55b325ed572cd0200bdb72af1433c3daa2bca6ef8eea68ce504a2
+    lastState: {}
+    name: backend-nginx
+    ready: true
+    resources: {}
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2026-10-24T11:06:24Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 0
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-ss2mz
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 195.54.179.123
+  hostIPs:
+  - ip: 195.54.179.123
+  observedGeneration: 1
+  phase: Running
+  podIP: 10.0.0.57
+  podIPs:
+  - ip: 10.0.0.57
+  qosClass: BestEffort
+  startTime: "2026-10-24T11:06:22Z"
